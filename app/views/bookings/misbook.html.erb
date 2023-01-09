@@ -1,0 +1,33 @@
+<div class="container mt-3">
+  <div class="brandfont mb-4">
+    <h1>Mis Bookings:</h1>
+  </div>
+  <% @misbook.each do |book| %>
+      <div class="card-product my-4 justify-content-start">
+          <div class="card-product-infos text-left ps-5">
+            <h5><strong>Pickup point: <%= book.application.pickup_point %></strong></h5>
+            <h5>Drop point: <%= book.application.drop_point %></h5>
+            <h5><strong>Dia y hora de recogida: <%= book.application.pickup_datetime %></strong></h5>
+            <h5>Precio: <%= book.application.price %></h5>
+            <h5>Status: <%= book.status %></h5>
+          </div>
+          <div class= "pe-5 ms-auto ">
+            <div class="row">
+              <% if current_user.is_driver == false %>
+                <% if book.status == "Pendiente" %>
+                  <div class= "col-12 col-md-6 d-flex justify-content-center d-md-block mb-2"> <%= link_to "Pagar", medio_de_pago_path(book), class: "btn btn-primary rounded-pill" %> </div>
+                <% end %>
+              <% end %>
+              <div class="col-12 col-md-6 d-flex justify-content-center d-md-block mb-2"> <%= button_to "Eliminar", book, method: :delete, class: "btn btn-primary rounded-pill" %></div>
+              <p></p>
+              <% if book.status == "Pagado" %>
+                <div class="col-12 col-md-6 d-flex justify-content-center d-md-block mb-2"> <%= button_to "Completar mi viaje",  updatecomplete_path(book), method: :patch,  class: "btn btn-primary rounded-pill"  %> </div>
+              <% end %>
+              <% if book.status == "Completado" %>
+               <div class="col-12 col-md-6 d-flex justify-content-center d-md-block mb-2"> <%= link_to "Dejar mi reseña",  new_booking_review_path(book), class: "btn btn-primary rounded-pill"  %></div>
+              <% end %>
+            </div>
+          </div>
+      </div>
+  <% end %>
+</div>

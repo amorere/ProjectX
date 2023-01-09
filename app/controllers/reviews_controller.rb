@@ -12,14 +12,18 @@ class ReviewsController < ApplicationController
   end
 
   def new
+    @booking = Booking.find(params[:booking_id])
     @review = Review.new
   end
 
   def create
+    @booking = Booking.find(params[:booking_id])
+    @booking.status = "Finalizado"
+    @booking.save
     @review = Review.new(review_params)
     @review.user_id = current_user.id
     if @review.save
-      # redirect_to cars_path
+      redirect_to misbook_path
     else
       render :new, status: :unprocessable_entity
     end

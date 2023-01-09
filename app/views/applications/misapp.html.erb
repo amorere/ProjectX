@@ -1,22 +1,37 @@
-<div class="container">
-<% @misapp.each do |app| %>
-   <div class= 'container'>
-  <div class="card-product my-4">
-    <div>
+
+<div class="container mt3">
+  <div class="brandfont mb-4">
+    <h1>Mis viajes:</h1>
+  </div>
+  <% @misapp.each do |app| %>
+    <div class="card-product my-4 justify-content-start">
+      <div class="card-product-infos text-left ps-5">
+        <h5><strong>Pickup point: <%= app.pickup_point %></strong></h5>
+        <h5>Drop point: <%= app.drop_point %> </h5>
+        <h5><strong>Dia y hora de recogida: <%= app.pickup_datetime %></strong></h5>
+          <% if app.country == "Chile" %>
+            <h5>Precio: <%= app.price %> CLP </h5>
+          <% else %>
+            <h5>Precio: <%= app.price %> USD </h5>
+          <% end %>
+        <h5>Estado: <%= app.confirmation_status %></h5>
       </div>
-      <div class="card-product-infos">
-        <p>Pickup point: <%= app.pickup_point %></p>
-        <p>Drop point: <%= app.drop_point %>
-        <p>Dia y hora de recogida: <%= app.pickup_datetime %></p>
-        <p>Precio: <%= app.price %></p>
-      </div>
-      <div>
-        <%= link_to "Editar Solicitud de viaje",   edit_application_path(app), class: "btn btn-gradient" %>
-        <p></p>
-        <%= button_to "Eliminar Solicitud", app, method: :delete, class: "btn btn-gradient" %>
+      <div class= "pe-5 ms-auto">
+          <% if app.confirmation_status != "Cerrado" %>
+            <%= link_to "Editar",   edit_application_path(app), class: "btn btn-primary rounded-pill" %>
+          <% end %>
+          <% unless app.confirmation_status == "Cerrado" %>
+            <%= link_to "Eliminar", application_path(app), data: {turbo_method: :delete, turbo_confirm: "Estas seguro?"}, class: "btn btn-primary rounded-pill" %>
+          <% end %>
+          <% if app.confirmation_status == "Contraoferta" %>
+            <%= link_to "Aceptar Solicitud", car_bookings_path( app.car_id, app_id: app.id ), class: "btn btn-primary rounded-pill" %>
+          <% end %>
+          <% if app.confirmation_status != "Cerrado" %>
+            <% if app.offers.size > 0 %>
+              <%= link_to "Ver ofertas", ofertapp_path( app ), class: "btn btn-primary rounded-pill" %>
+            <% end %>
+          <% end %>
       </div>
     </div>
-  </div>
-</div>
-<% end %>
+  <% end %>
 </div>

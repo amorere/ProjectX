@@ -1,21 +1,76 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Mi pagina de prueba</title>
-  </head>
 
-  <body>
-     <div class="banner">
-        <div class="container">
-          <h1>Cool Buddy</h1>
-          <h2><strong>Volve seguro</strong> nosotros <strong>manejamos.</strong></h2>
-          <p>Donde quieras y cuando quieras, tene un Buddy a tu alcance.</p>
-          <%= link_to "Necesito un Buddy", miautodeviaje_path(), class: "btn btn-primary" %>
-          <%= link_to "Subir mi auto", new_car_path, class: "btn btn-primary" %>
-          <%= link_to "Quiero ser un Buddy", applications_path, class: "btn btn-primary" %>
-
+     <div class="banner d-flex align-items-end">
+        <div class="container pb-5 d-flex" style= "height: 700px">
+          <div class="mt-auto">
+              <h1>Good Buddy</h1>
+              <h2><strong>Volve seguro</strong> nosotros <strong>manejamos.</strong></h2>
+              <p>Donde quieras y cuando quieras, tene un Buddy a tu alcance.</p>
+              <% if user_signed_in? %>
+              <% if current_user.is_driver %>
+                <%= link_to "Quiero realizar un viaje", applications_path, class: "btn btn-primary rounded-pill" %>
+                <% else %>
+                <%= link_to "Solicitar un viaje", miautodeviaje_path, class: "btn btn-primary rounded-pill" %>
+                <% end %>
+              <% else %>
+                <%= link_to "Registrate", new_user_registration_path, class: "btn btn-primary rounded-pill" %>
+              <% end %>
+          </div>
         </div>
-    </div>
-  </body>
-</html>
+      </div>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="features-block">
+          <div class="custom-block">
+              <div class="split-layout fixed">
+                 <div class="split-item" style=" ">
+                    <div class="row reverse">
+                       <div class="col-md-6 image-column" style="margin: auto 0;">
+                          <div class="image-block ">
+                            <%= image_tag "Traffic.webp", class: "imagenhome"%>
+                          </div>
+                       </div>
+                        <div class="col-md-6 text-column" style="margin: auto 0;">
+                          <div class="text-block">
+                            <h2 class="lang align-left">Claridad y transparencia en las tarifas</h2>
+                            <p class="align-left">Siempre te mostramos el precio sugerido antes de aceptar el viaje para que puedas hacer tus viajes, sin sorpresas.</p>
+                          </div>
+                        </div>
+                     </div>
+                 </div>
+                    <div class="split-item" style=" ">
+                       <div class="row ">
+                         <div class="col-md-6 text-column" style="margin: auto 0;">
+                            <div class="text-block">
+                              <h2 class="lang align-left">Tu seguridad es nuestra prioridad</h2>
+                              <p class="align-left">Con viajes geolocalizados y choferes identificados. Además, ponemos medidas de protección contra el COVID-19 para que viajas sin preocupaciones.</p>
+                            </div>
+                         </div>
+                            <div class="col-md-6 image-column" style="margin: auto 0;">
+                              <div class="image-block ms-5">
+                                <%= image_tag "MapaHome.jpg", class: "imagenhome1" %>
+                              </div>
+                            </div>
+                       </div>
+                    </div>
+                       <div class="split-item" style=" ">
+                          <div class="row reverse">
+                            <div class="col-md-6 image-column" style="margin: auto 0;">
+                              <div class="image-block ">
+                                <%= image_tag "CallcenterHome.jpg", class: "imagenhome"  %>
+                              </div>
+                            </div>
+                                  <div class="col-md-6 text-column" style="margin: auto 0;">
+                                    <div class="text-block">
+                                      <h2 class="lang align-left">Estamos para ayudarte</h2>
+                                     <p class="align-left">Nuestro equipo de atencion al cliente esta disponible para responder tus dudas y preguntas.</p>
+                                    </div>
+                                  </div>
+                           </div>
+                       </div>
+                    </div>
+               </div>
+            </div>
+        </div>
+      </div>
+  </div>

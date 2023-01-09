@@ -1,0 +1,44 @@
+ <div class="container mt-3 d-flex flex-column align-items-center">
+    <div class="brandfont mt-3">
+      <h1> Agrega tu tarjeta </h1>
+    </div>
+    <div class="formulario mt-3 mb-5">
+      <div class="container mt-3" data-controller="display-driver-fields">
+          <div class="form-inputs">
+            <div class="mb-3 string optional user_first_name">
+              <input class="form-control string optional"  placeholder="Numero de tarjeta" >
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="mb-3 string optional user_first_name">
+                  <input class="form-control string optional" placeholder="Nombre del titular de la tarjeta" >
+                </div>
+              </div>
+            </div>
+            <div class="row md-12">
+              <div class="col col-md-6">
+                <div class="mb-3 string optional user_dni">
+                  <input class="form-control string optional" placeholder="Fecha de caducidad" >
+                </div>
+              </div>
+              <div class="col md-6">
+                <div class="mb-3 tel optional user_phone_number">
+                  <input class="form-control string tel optional" placeholder="Codigo de seguridad" >
+                </div>
+              </div>
+              <div class="mb-3 string optional user_first_name">
+                <input class="form-control string optional" placeholder="DNI del titular de la tarjeta" >
+              </div>
+            </div>
+            <div class="form-inputs">
+              <div class="row">
+                <div class="col-12">
+                   <%= button_to "Pagar", pagadocomplete_path(@booking), method: :patch, class: "btn Btn btn-primary col-12"  %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

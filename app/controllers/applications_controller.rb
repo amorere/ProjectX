@@ -1,7 +1,8 @@
 class ApplicationsController < ApplicationController
-  before_action :set_app, only: %i[show update destroy edit]
+  before_action :set_app, only: %i[show update destroy edit offer newoffer]
 
   def index
+
     @apps = Application.all
     @apps = Application.where.not(latitude: nil, latitude2: nil, longitude: nil, longitude2: nil)
     @markers = @apps.map do |app|
@@ -18,6 +19,25 @@ class ApplicationsController < ApplicationController
   end
 
   def show
+    @app = Application.find(params[:id])
+    # @apps = @apps.where.not(lat: nil, long: nil, lat2: nil, long2: nil)
+    @markers =
+      [{
+        lat: @app.lat,
+        long: @app.long,
+        lat2: @app.lat2,
+        long2: @app.long2
+
+      }]
+  end
+
+  def offer
+  end
+
+  def newoffer
+    @app.confirmation_status = "Contraoferta"
+    @app.update(app_params)
+    redirect_to misapp_path
   end
 
   def edit
@@ -51,7 +71,7 @@ class ApplicationsController < ApplicationController
   end
 
   def destroy
-    @app.destroy
+    @app.destroy if @app.confirmation_status == "Abierto"
     redirect_to misapp_path, status: :see_other
   end
 
@@ -62,6 +82,6 @@ class ApplicationsController < ApplicationController
   end
 
   def app_params
-    params.require(:application).permit(:pickup_point, :drop_point, :pickup_datetime, :confirmation_status, :price)
+    params.require(:application).permit(:pickup_point, :drop_point, :pickup_datetime, :country, :city, :comune, :confirmation_status, :price)
   end
 end
