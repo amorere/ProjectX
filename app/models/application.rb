@@ -2,6 +2,7 @@ class Application < ApplicationRecord
   belongs_to :user
   belongs_to :car
   has_many :bookings
+
   has_many :offers, dependent: :destroy
   before_save :geocode_endpoints
   geocoded_by :pickup_point, :latitude => :lat, :longitude => :long
@@ -16,11 +17,11 @@ class Application < ApplicationRecord
   }
 
   private
-
   def geocode_endpoints
     if pickup_point_changed?
       geocoded = Geocoder.search(pickup_point).first
       if geocoded
+
         self.lat = geocoded.latitude
         self.long = geocoded.longitude
       end

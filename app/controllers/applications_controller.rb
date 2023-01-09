@@ -2,11 +2,19 @@ class ApplicationsController < ApplicationController
   before_action :set_app, only: %i[show update destroy edit offer newoffer]
 
   def index
-    if params[:query].present?
-      @apps = Application.search_by_country_city_and_comune(params[:query])
 
-    else
-      @apps = Application.all
+    @apps = Application.all
+    @apps = Application.where.not(latitude: nil, latitude2: nil, longitude: nil, longitude2: nil)
+    @markers = @apps.map do |app|
+      {
+        lat: app.latitude,
+        lng: app.longitude,
+        lat2: app.latitude2,
+        lng2: app.longitude2 # ,
+        # infoWindow: render_to_string(partial: "info_window", locals: { app: app })
+        # Uncomment the above line if you want each of your markers to display a info window when clicked
+        # (you will also need to create the partial "/flats/map_box")
+      }
     end
   end
 
